@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kill the Fluff — Decision Intelligence Framework by Karty Cain</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #E85D04;
+  --orange-deep: #C44D00;
+  --orange-light: #FFF3E8;
+  --orange-mid: #FD7C2A;
+  --orange-pale: #FEF0E6;
+  --dark: #0F0F0F;
+  --dark2: #1A1A1A;
+  --dark3: #242424;
+  --gray: #555;
+  --gray-light: #888;
+  --gray-faint: #F5F4F2;
+  --white: #FEFEFE;
+  --border: #E2E0DC;
+  --text: #2A2A2A;
+  --red: #C0392B;
+  --green: #27AE60;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--text); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  background: rgba(254,254,254,0.97); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px; display: flex; align-items: center; justify-content: space-between; height: 60px;
+}
+.nav-brand { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 18px; color: var(--orange); letter-spacing: -0.5px; }
+.nav-links { display: flex; gap: 2px; list-style: none; }
+.nav-links a { text-decoration: none; font-size: 12px; font-weight: 500; color: var(--gray); padding: 6px 10px; border-radius: 6px; transition: all 0.2s; }
+.nav-links a:hover { color: var(--orange); background: var(--orange-light); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh; padding-top: 60px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  position: relative; overflow: hidden;
+}
+.hero-left {
+  background: var(--dark2); padding: 100px 64px 100px 80px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.hero-bg-cross {
+  position: absolute; top: 40px; right: 40px;
+  width: 120px; height: 120px; opacity: 0.06;
+}
+.hero-bg-cross::before, .hero-bg-cross::after {
+  content: ''; position: absolute; background: var(--orange);
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+}
+.hero-bg-cross::before { width: 100%; height: 20px; }
+.hero-bg-cross::after { width: 20px; height: 100%; }
+
+.hero-glow {
+  position: absolute; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(232,93,4,0.18) 0%, transparent 65%);
+  top: -100px; right: -150px; pointer-events: none;
+}
+.hero-glow2 {
+  position: absolute; width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(232,93,4,0.08) 0%, transparent 65%);
+  bottom: -50px; left: -50px; pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+  color: var(--orange); background: rgba(232,93,4,0.1);
+  border: 1px solid rgba(232,93,4,0.25); padding: 5px 12px;
+  border-radius: 2px; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 28px; width: fit-content;
+  animation: fadeUp 0.6s ease forwards; opacity: 0;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif; font-weight: 900;
+  font-size: clamp(56px, 6.5vw, 88px); color: var(--white);
+  line-height: 0.92; letter-spacing: -3px; margin-bottom: 6px;
+  animation: fadeUp 0.6s 0.1s ease forwards; opacity: 0;
+}
+.hero-title span { color: var(--orange); }
+.hero-tagline {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 17px; color: rgba(255,255,255,0.4); margin-bottom: 36px;
+  animation: fadeUp 0.6s 0.2s ease forwards; opacity: 0;
+}
+.hero-desc {
+  font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.85;
+  max-width: 400px; margin-bottom: 48px;
+  animation: fadeUp 0.6s 0.3s ease forwards; opacity: 0;
+}
+
+/* Pulse icon */
+.hero-pulse {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 40px;
+  animation: fadeUp 0.6s 0.35s ease forwards; opacity: 0;
+}
+.pulse-line {
+  width: 200px; height: 36px;
+}
+.pulse-label {
+  font-family: 'DM Mono', monospace; font-size: 10px;
+  color: rgba(255,255,255,0.3); letter-spacing: 1px; text-transform: uppercase;
+}
+
+.hero-author {
+  display: flex; align-items: center; gap: 14px;
+  animation: fadeUp 0.6s 0.4s ease forwards; opacity: 0;
+}
+.author-avatar {
+  width: 42px; height: 42px; background: var(--orange); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-weight: 900; font-size: 17px; color: white;
+}
+.author-name { font-weight: 600; font-size: 14px; color: var(--white); }
+.author-role { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
+
+.hero-right {
+  background: var(--gray-faint); padding: 100px 64px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.toc-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gray-light);
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px;
+}
+.toc-list { list-style: none; }
+.toc-item {
+  display: flex; align-items: flex-start; gap: 18px;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+  text-decoration: none; color: inherit; transition: all 0.2s;
+  cursor: pointer;
+}
+.toc-item:last-child { border-bottom: none; }
+.toc-item:hover .toc-title { color: var(--orange); }
+.toc-item:hover .toc-badge { background: var(--orange); color: white; border-color: var(--orange); }
+.toc-badge {
+  font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+  color: var(--orange); background: var(--orange-light);
+  border: 1px solid rgba(232,93,4,0.2);
+  min-width: 30px; height: 30px; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.2s; margin-top: 3px;
+}
+.toc-title { font-weight: 700; font-size: 15px; color: var(--dark); transition: color 0.2s; line-height: 1.3; }
+.toc-sub { font-size: 12px; color: var(--gray-light); margin-top: 3px; }
+
+/* ── SECTION SHELL ── */
+.section {
+  padding: 110px 0; border-bottom: 1px solid var(--border);
+  position: relative; overflow: hidden;
+}
+.section:nth-child(even) { background: var(--gray-faint); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 80px; }
+
+.section-header { margin-bottom: 56px; }
+.section-eyebrow {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
+}
+.section-num {
+  font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+  color: var(--orange); background: var(--orange-light);
+  border: 1px solid rgba(232,93,4,0.2); padding: 4px 10px;
+  border-radius: 2px; letter-spacing: 1px; text-transform: uppercase;
+}
+.section-line { flex: 1; height: 1px; background: var(--border); }
+.section-title {
+  font-family: 'Playfair Display', serif; font-weight: 900;
+  font-size: clamp(40px, 4.5vw, 62px); color: var(--dark);
+  line-height: 1.0; letter-spacing: -2px; margin-bottom: 10px;
+}
+.section-tagline {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 19px; color: var(--gray); line-height: 1.5;
+}
+
+/* ── ANECDOTE BLOCK ── */
+.anecdote {
+  background: var(--dark2); border-radius: 12px;
+  padding: 36px 40px; margin: 0 0 48px;
+  position: relative; overflow: hidden;
+}
+.anecdote::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%; background: var(--orange);
+}
+.anecdote-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--orange);
+  margin-bottom: 14px;
+}
+.anecdote-oneliner {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 20px; color: white; line-height: 1.5;
+  margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-bottom: 20px;
+}
+.anecdote-body {
+  font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.85;
+}
+
+.body-text { font-size: 15px; color: var(--gray); line-height: 1.9; max-width: 700px; margin-bottom: 20px; }
+
+/* ── CALLOUT ── */
+.callout {
+  background: var(--orange-light); border-left: 4px solid var(--orange);
+  padding: 24px 28px; border-radius: 0 8px 8px 0; margin: 48px 0;
+}
+.callout-label {
+  font-family: 'DM Mono', monospace; font-size: 9px; font-weight: 500;
+  color: var(--orange); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px;
+}
+.callout-text { font-size: 16px; color: var(--dark2); font-weight: 600; line-height: 1.7; }
+
+/* ── DIAGRAM SHELL ── */
+.diagram {
+  background: white; border: 1px solid var(--border);
+  border-radius: 14px; padding: 44px; margin: 48px 0;
+  box-shadow: 0 2px 24px rgba(0,0,0,0.04);
+}
+.diagram-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--gray-light);
+  text-align: center; margin-bottom: 36px;
+}
+
+/* ═══════════════════════════════════════════
+   F1 — THE VANITY SCAN
+   Diagram: Two columns with a glowing scan visual
+═══════════════════════════════════════════ */
+.scan-grid {
+  display: grid; grid-template-columns: 1fr 56px 1fr; gap: 0; align-items: stretch;
+}
+.scan-col { }
+.scan-head {
+  padding: 14px 20px; border-radius: 8px 8px 0 0;
+  font-weight: 700; font-size: 13px; text-align: center; line-height: 1.4;
+}
+.scan-head.dim { background: #EFEFEF; color: #999; }
+.scan-head.bright { background: var(--orange); color: white; }
+.scan-items { border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; overflow: hidden; }
+.scan-item {
+  padding: 14px 20px; font-size: 13px; border-bottom: 1px solid var(--border);
+  line-height: 1.5; display: flex; align-items: flex-start; gap: 10px;
+}
+.scan-item:last-child { border-bottom: none; }
+.scan-col.dim .scan-item { color: #AAA; background: white; }
+.scan-col.dim .scan-item::before { content: '○'; color: #CCC; font-size: 10px; margin-top: 3px; flex-shrink: 0; }
+.scan-col.bright .scan-item { color: var(--dark); font-weight: 500; }
+.scan-col.bright .scan-item:nth-child(odd) { background: var(--orange-pale); }
+.scan-col.bright .scan-item::before { content: '●'; color: var(--orange); font-size: 10px; margin-top: 3px; flex-shrink: 0; }
+.scan-divider {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+}
+.scan-arrow-circle {
+  width: 36px; height: 36px; background: var(--orange); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; color: white; font-size: 16px;
+  box-shadow: 0 0 0 6px rgba(232,93,4,0.12);
+}
+.scan-miss-label {
+  font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gray-light);
+  text-align: center; line-height: 1.6; letter-spacing: 0.5px;
+}
+
+/* Scan visual footer */
+.scan-footer {
+  margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border);
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+.scan-stat {
+  background: var(--gray-faint); border-radius: 8px; padding: 18px 20px;
+  border: 1px solid var(--border);
+}
+.scan-stat-label {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--gray-light); margin-bottom: 8px;
+}
+.scan-stat-val { font-size: 28px; font-weight: 700; color: var(--dark); font-family: 'Playfair Display', serif; }
+.scan-stat-desc { font-size: 12px; color: var(--gray); margin-top: 4px; line-height: 1.5; }
+.scan-stat.highlight { background: var(--orange-light); border-color: rgba(232,93,4,0.2); }
+.scan-stat.highlight .scan-stat-val { color: var(--orange); }
+
+/* ═══════════════════════════════════════════
+   F2 — THE INTAKE FORM
+   Diagram: Source cards → funnel → backlog
+═══════════════════════════════════════════ */
+.intake-sources {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px;
+}
+.source-card {
+  background: var(--gray-faint); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px; transition: all 0.25s; cursor: default;
+  position: relative; overflow: hidden;
+}
+.source-card:hover { transform: translateY(-3px); border-color: var(--orange); box-shadow: 0 8px 24px rgba(232,93,4,0.1); }
+.source-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: var(--orange); transform: scaleX(0);
+  transform-origin: left; transition: transform 0.25s;
+}
+.source-card:hover::after { transform: scaleX(1); }
+.source-icon { font-size: 22px; margin-bottom: 10px; }
+.source-name { font-weight: 700; font-size: 13px; color: var(--dark); margin-bottom: 5px; }
+.source-desc { font-size: 11px; color: var(--gray); line-height: 1.5; margin-bottom: 10px; }
+.signal-badge {
+  display: inline-block; font-family: 'DM Mono', monospace; font-size: 9px;
+  padding: 2px 8px; border-radius: 2px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase;
+}
+.sig-vh { background: #FFEEE0; color: var(--orange); border: 1px solid rgba(232,93,4,0.25); }
+.sig-h  { background: #FFF5EC; color: var(--orange-mid); border: 1px solid rgba(253,124,42,0.2); }
+.sig-m  { background: #F0F0F0; color: #888; border: 1px solid #DDD; }
+
+.funnel-wrap { display: flex; justify-content: center; margin: 8px 0; }
+.funnel-svg { width: 100%; max-width: 500px; }
+
+.backlog-box {
+  background: var(--dark2); border-radius: 10px; padding: 24px 32px;
+  display: flex; align-items: center; gap: 24px;
+}
+.backlog-icon {
+  width: 48px; height: 48px; background: var(--orange); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.backlog-title { font-weight: 700; font-size: 15px; color: var(--orange); margin-bottom: 4px; }
+.backlog-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+/* Compare table */
+.compare-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 40px;
+}
+.compare-col { border-radius: 10px; overflow: hidden; border: 1px solid var(--border); }
+.compare-head {
+  padding: 14px 20px; font-weight: 700; font-size: 13px;
+}
+.compare-head.bad { background: #F0F0F0; color: var(--gray); }
+.compare-head.good { background: var(--orange); color: white; }
+.compare-body { padding: 8px 0; }
+.compare-row {
+  padding: 11px 20px; font-size: 13px; border-bottom: 1px solid var(--border);
+  line-height: 1.5; display: flex; align-items: flex-start; gap: 10px;
+}
+.compare-row:last-child { border-bottom: none; }
+.compare-col.bad .compare-row { color: #AAA; }
+.compare-col.bad .compare-row::before { content: '✕'; color: #CCC; flex-shrink: 0; font-size: 11px; margin-top: 2px; }
+.compare-col.good .compare-row { color: var(--dark); font-weight: 500; }
+.compare-col.good .compare-row::before { content: '✓'; color: var(--orange); flex-shrink: 0; font-size: 11px; margin-top: 2px; }
+
+/* ═══════════════════════════════════════════
+   F3 — THE SYMPTOM TRAP
+   Diagram: Intent stack rows + collapse example
+═══════════════════════════════════════════ */
+.intent-header-row {
+  display: grid; grid-template-columns: 150px 1fr 1fr;
+  margin-bottom: 6px;
+}
+.intent-header-cell {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--gray-light);
+  padding: 0 18px 8px;
+}
+.intent-header-cell:first-child { padding-left: 0; }
+
+.intent-stack { display: flex; flex-direction: column; gap: 8px; }
+.intent-row {
+  display: grid; grid-template-columns: 150px 1fr 1fr;
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.intent-row:hover { transform: translateX(5px); box-shadow: -5px 0 0 var(--orange), 0 4px 20px rgba(0,0,0,0.06); }
+.intent-label {
+  background: var(--dark2); padding: 20px 16px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; font-weight: 700; font-size: 13px; color: white; line-height: 1.3;
+}
+.intent-label.highlight { background: var(--orange); }
+.intent-sounds {
+  padding: 18px 20px; background: white; border-right: 1px solid var(--border);
+  font-size: 13px; color: var(--gray); font-style: italic; line-height: 1.6;
+}
+.intent-resolves {
+  padding: 18px 20px; background: var(--orange-pale);
+  font-size: 13px; color: var(--dark); font-weight: 500; line-height: 1.6;
+}
+
+/* Collapse example */
+.collapse-demo {
+  background: var(--dark2); border-radius: 12px; padding: 32px 36px; margin-top: 40px;
+}
+.collapse-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--orange); margin-bottom: 20px;
+}
+.collapse-questions {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px;
+}
+.collapse-q {
+  background: rgba(255,255,255,0.06); border-radius: 8px;
+  padding: 14px 16px; font-size: 13px; color: rgba(255,255,255,0.65);
+  font-style: italic; line-height: 1.5; border: 1px solid rgba(255,255,255,0.06);
+  transition: background 0.2s;
+}
+.collapse-q:hover { background: rgba(255,255,255,0.1); }
+
+.collapse-arrows {
+  display: flex; justify-content: space-around; margin-bottom: 16px;
+}
+.collapse-arrow { font-size: 20px; color: rgba(232,93,4,0.5); }
+
+.collapse-result {
+  background: var(--orange); border-radius: 8px; padding: 18px 24px; text-align: center;
+}
+.collapse-result-title { font-weight: 700; font-size: 15px; color: white; margin-bottom: 4px; }
+.collapse-result-desc { font-size: 12px; color: rgba(255,255,255,0.8); line-height: 1.5; }
+
+/* ═══════════════════════════════════════════
+   F4 — THE MISPLACED ORGAN
+   Diagram: Three rooms / ladder
+═══════════════════════════════════════════ */
+.rooms-grid { display: flex; flex-direction: column; gap: 6px; }
+.room-row {
+  display: grid; grid-template-columns: 130px 1fr;
+  border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  transition: transform 0.2s;
+}
+.room-row:hover { transform: translateX(5px); }
+.room-label {
+  padding: 26px 16px; display: flex; align-items: center; justify-content: center;
+  text-align: center; font-weight: 800; font-size: 14px; color: white; line-height: 1.3;
+}
+.room-label.r1 { background: var(--orange); }
+.room-label.r2 { background: var(--orange-mid); }
+.room-label.r3 { background: #F0A060; }
+.room-content {
+  display: grid; grid-template-columns: 1fr 1fr; background: white;
+}
+.room-when {
+  padding: 20px 22px; border-right: 1px solid var(--border);
+  font-size: 13px; color: var(--gray); line-height: 1.6;
+}
+.room-examples {
+  padding: 20px 22px; font-size: 13px; color: var(--dark);
+  line-height: 1.6; background: var(--gray-faint); font-style: italic;
+}
+.room-sublabel {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--gray-light); display: block; margin-bottom: 7px;
+}
+
+/* Cascade flow */
+.cascade {
+  background: var(--gray-faint); border: 1px solid var(--border);
+  border-radius: 12px; padding: 32px; margin-top: 40px;
+}
+.cascade-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--orange); margin-bottom: 20px;
+}
+.cascade-flow {
+  display: flex; align-items: center; gap: 0; flex-wrap: nowrap; overflow-x: auto;
+}
+.cascade-step {
+  flex: 1; min-width: 120px; padding: 16px 14px;
+  border-radius: 8px; text-align: center; font-size: 12px; font-weight: 600;
+  line-height: 1.4;
+}
+.cascade-step.s1 { background: var(--orange); color: white; }
+.cascade-step.s2 { background: white; border: 1px solid var(--border); color: var(--dark); }
+.cascade-step.s3 { background: white; border: 1px solid var(--border); color: var(--dark); }
+.cascade-step.s4 { background: var(--dark2); color: white; }
+.cascade-arrow { font-size: 18px; color: var(--orange); padding: 0 8px; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════
+   F5 — DEATH BY MISSED ROUNDS
+   Diagram: Three rhythm cards + rules
+═══════════════════════════════════════════ */
+.rhythm-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px;
+}
+.rhythm-card {
+  border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.rhythm-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
+.rhythm-head { padding: 22px 24px; background: var(--dark2); position: relative; overflow: hidden; }
+.rhythm-head::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: var(--orange);
+}
+.rhythm-freq {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin-bottom: 6px;
+}
+.rhythm-title {
+  font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: white;
+}
+.rhythm-body { padding: 20px 24px; background: white; }
+.rhythm-acts { list-style: none; margin-bottom: 20px; }
+.rhythm-acts li {
+  font-size: 13px; color: var(--gray); padding: 9px 0 9px 18px;
+  border-bottom: 1px solid var(--border); line-height: 1.5; position: relative;
+}
+.rhythm-acts li::before {
+  content: ''; position: absolute; left: 0; top: 17px;
+  width: 6px; height: 6px; background: var(--orange); border-radius: 50%;
+}
+.rhythm-acts li:last-child { border-bottom: none; }
+.rhythm-output {
+  background: var(--orange-pale); border-radius: 6px; padding: 14px 16px;
+  font-size: 12px; color: var(--dark); font-weight: 500; line-height: 1.5;
+}
+.rhythm-output-label {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange);
+  display: block; margin-bottom: 5px;
+}
+
+/* Three rules */
+.rules-box {
+  background: var(--gray-faint); border: 1px solid var(--border);
+  border-radius: 12px; padding: 32px;
+}
+.rules-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--orange); margin-bottom: 20px;
+}
+.rule-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  padding: 16px 0; border-bottom: 1px solid var(--border);
+}
+.rule-item:last-child { border-bottom: none; padding-bottom: 0; }
+.rule-num {
+  width: 30px; height: 30px; background: var(--orange); border-radius: 5px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 700;
+  color: white; flex-shrink: 0; margin-top: 2px;
+}
+.rule-text { font-size: 14px; color: var(--text); line-height: 1.65; }
+.rule-text strong { color: var(--dark); }
+
+/* ── SUMMARY ── */
+.summary-section { padding: 110px 0; background: var(--dark2); }
+.summary-title {
+  font-family: 'Playfair Display', serif; font-weight: 900;
+  font-size: 52px; color: white; letter-spacing: -2px; margin-bottom: 8px;
+}
+.summary-title span { color: var(--orange); }
+.summary-sub { font-size: 14px; color: rgba(255,255,255,0.4); margin-bottom: 56px; }
+
+.summary-cards { display: flex; flex-direction: column; gap: 3px; }
+.summary-card {
+  display: grid; grid-template-columns: 200px 1fr 1fr;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 8px; overflow: hidden; transition: background 0.2s;
+}
+.summary-card:hover { background: rgba(232,93,4,0.06); }
+.summary-card-num {
+  padding: 24px 20px; display: flex; flex-direction: column;
+  justify-content: center; border-right: 1px solid rgba(255,255,255,0.05);
+}
+.s-num {
+  font-family: 'DM Mono', monospace; font-size: 11px;
+  color: var(--orange); font-weight: 500; margin-bottom: 4px;
+}
+.s-name { font-weight: 700; font-size: 15px; color: white; line-height: 1.3; }
+.summary-card-shift {
+  padding: 24px 20px; font-size: 13px; color: rgba(255,255,255,0.45);
+  font-style: italic; line-height: 1.6; border-right: 1px solid rgba(255,255,255,0.05);
+  display: flex; align-items: center;
+}
+.summary-card-output {
+  padding: 24px 20px; font-size: 13px; color: rgba(255,255,255,0.65);
+  line-height: 1.6; display: flex; align-items: center;
+}
+
+/* Summary header row */
+.summary-header {
+  display: grid; grid-template-columns: 200px 1fr 1fr;
+  padding: 0 0 12px; margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.summary-header-cell {
+  font-family: 'DM Mono', monospace; font-size: 9px;
+  letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.25);
+  padding: 0 20px;
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--dark); padding: 48px 80px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+.footer-brand { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 26px; color: var(--orange); }
+.footer-right { text-align: right; }
+.footer-name { font-size: 14px; color: rgba(255,255,255,0.5); }
+.footer-role { font-size: 12px; color: rgba(255,255,255,0.25); margin-top: 3px; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse-draw {
+  0% { stroke-dashoffset: 300; }
+  100% { stroke-dashoffset: 0; }
+}
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ECG line animation */
+.ecg-path {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: pulse-draw 2s ease forwards 0.8s;
+}
+
+@media (max-width: 960px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-left { padding: 80px 40px; }
+  .hero-right { padding: 60px 40px; }
+  .container { padding: 0 32px; }
+  nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .rhythm-grid { grid-template-columns: 1fr; }
+  .scan-grid { grid-template-columns: 1fr; }
+  .scan-divider { display: none; }
+  .intake-sources { grid-template-columns: 1fr 1fr; }
+  .intent-row { grid-template-columns: 1fr; }
+  .intent-label { padding: 12px; }
+  .collapse-questions { grid-template-columns: 1fr; }
+  .summary-card { grid-template-columns: 1fr; }
+  footer { flex-direction: column; gap: 16px; }
+  .footer-right { text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Kill the Fluff</div>
+  <ul class="nav-links">
+    <li><a href="#f1">Vanity Scan</a></li>
+    <li><a href="#f2">Intake Form</a></li>
+    <li><a href="#f3">Symptom Trap</a></li>
+    <li><a href="#f4">Misplaced Organ</a></li>
+    <li><a href="#f5">Missed Rounds</a></li>
+    <li><a href="#summary">Summary</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-bg-cross"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <div class="hero-eyebrow">Decision Intelligence Framework</div>
+    <h1 class="hero-title">Kill<br>the <span>Fluff</span></h1>
+    <p class="hero-tagline">Five diagnoses. One operating principle.</p>
+    <p class="hero-desc">Most tech companies don't have a content problem. They have a misdiagnosis problem. They're treating bruises while tumours go undetected. These five frameworks fix that.</p>
+
+    <!-- ECG pulse line -->
+    <div class="hero-pulse">
+      <svg class="pulse-line" viewBox="0 0 200 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="ecg-path" d="M0 18 L30 18 L38 18 L42 4 L46 32 L50 18 L56 18 L62 18 L66 8 L70 28 L74 18 L80 18 L200 18"
+          stroke="#E85D04" stroke-width="1.5" fill="none"/>
+      </svg>
+      <span class="pulse-label">Patient is critical</span>
+    </div>
+
+    <div class="hero-author">
+      <div class="author-avatar">K</div>
+      <div>
+        <div class="author-name">Karty Cain</div>
+        <div class="author-role">Content & Communication Strategist</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="toc-eyebrow">What's inside</div>
+    <ul class="toc-list">
+      <a href="#f1" class="toc-item">
+        <div class="toc-badge">01</div>
+        <div>
+          <div class="toc-title">The Vanity Scan</div>
+          <div class="toc-sub">You're measuring the bruise. The tumour is elsewhere.</div>
+        </div>
+      </a>
+      <a href="#f2" class="toc-item">
+        <div class="toc-badge">02</div>
+        <div>
+          <div class="toc-title">The Intake Form</div>
+          <div class="toc-sub">A system that catches symptoms before the emergency.</div>
+        </div>
+      </a>
+      <a href="#f3" class="toc-item">
+        <div class="toc-badge">03</div>
+        <div>
+          <div class="toc-title">The Symptom Trap</div>
+          <div class="toc-sub">Every patient said "it hurts." You treated them all the same.</div>
+        </div>
+      </a>
+      <a href="#f4" class="toc-item">
+        <div class="toc-badge">04</div>
+        <div>
+          <div class="toc-title">The Misplaced Organ</div>
+          <div class="toc-sub">Right answer. Wrong room. Nobody finds it.</div>
+        </div>
+      </a>
+      <a href="#f5" class="toc-item">
+        <div class="toc-badge">05</div>
+        <div>
+          <div class="toc-title">Death by Missed Rounds</div>
+          <div class="toc-sub">The surgeon who only checks on patients when she feels like it.</div>
+        </div>
+      </a>
+    </ul>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- F1: THE VANITY SCAN -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="f1">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">
+        <span class="section-num">Framework 01</span>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">The Vanity Scan</h2>
+      <p class="section-tagline">You spent three hours studying a bruise. The tumour went untreated.</p>
+    </div>
+
+    <div class="anecdote reveal">
+      <div class="anecdote-eyebrow">The Diagnosis</div>
+      <p class="anecdote-oneliner">"The bruise was visible. It showed up clean on every report. So that's what got treated."</p>
+      <p class="anecdote-body">The bruise was big, measurable, easy to point at in a meeting. So it got three hours of surgical attention and a very clean report. Meanwhile the actual tumour — the question your buyer is asking at 11pm before they sign with someone else — never made it onto the scan. Too small. Too inconsistently worded. Too hard to put in a dashboard. High-volume questions are the bruise. They don't kill deals. The tumour does. And you can't treat what you're not looking for.</p>
+    </div>
+
+    <p class="body-text reveal">Search volume feels like strategy because it produces numbers. But volume tells you what people are <em>curious</em> about — not what is holding them back. The questions that shape actual decisions are low-frequency, emotionally charged, and buried inside objections. They look terrible in a dashboard. But they're the exact questions that make someone pause — and that pause is where deals are won or lost.</p>
+
+    <div class="diagram reveal">
+      <div class="diagram-label">The Vanity Scan — What the dashboard shows vs. what actually shapes decisions</div>
+      <div class="scan-grid">
+        <div class="scan-col dim">
+          <div class="scan-head dim">🔊 High Volume Questions<br><small style="font-weight:400;font-size:11px;opacity:0.7">Generates impressions. Treated first.</small></div>
+          <div class="scan-items">
+            <div class="scan-item">How much does this cost?</div>
+            <div class="scan-item">What integrations does this have?</div>
+            <div class="scan-item">How long does setup take?</div>
+            <div class="scan-item">Is there a free trial?</div>
+            <div class="scan-item">What's on the roadmap?</div>
+          </div>
+        </div>
+        <div class="scan-divider">
+          <div class="scan-arrow-circle">→</div>
+          <div class="scan-miss-label">miss<br>these</div>
+        </div>
+        <div class="scan-col bright">
+          <div class="scan-head bright">🎯 High Consequence Questions<br><small style="font-weight:400;font-size:11px;opacity:0.85">Shapes decisions. Almost never treated.</small></div>
+          <div class="scan-items">
+            <div class="scan-item">What ends up costing more six months in?</div>
+            <div class="scan-item">Is this going to create more work for my team?</div>
+            <div class="scan-item">Why do teams like mine abandon tools like this?</div>
+            <div class="scan-item">What's the catch I'm not seeing yet?</div>
+            <div class="scan-item">Is this overkill for a team our size?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scan-footer">
+        <div class="scan-stat">
+          <div class="scan-stat-label">What volume measures</div>
+          <div class="scan-stat-val">Curiosity</div>
+          <div class="scan-stat-desc">How many people searched. How many clicked. How many read. None of these are buying signals.</div>
+        </div>
+        <div class="scan-stat highlight">
+          <div class="scan-stat-label">What actually moves deals</div>
+          <div class="scan-stat-val">Uncertainty</div>
+          <div class="scan-stat-desc">The unanswered question that keeps a buyer from committing. Low frequency. Maximum consequence.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <div class="callout-label">Kill the Fluff Rule #1</div>
+      <div class="callout-text">High-volume questions help someone understand a category. High-consequence questions help someone choose. Choosing is where revenue lives. Build for choosing.</div>
+    </div>
+
+    <h3 style="font-weight:700;font-size:17px;color:var(--dark);margin:48px 0 20px;" class="reveal">How to apply this</h3>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px;" class="reveal">
+      <div style="background:var(--gray-faint);border:1px solid var(--border);border-radius:10px;padding:24px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Step 01</div>
+        <div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:6px;">Audit your existing content</div>
+        <div style="font-size:13px;color:var(--gray);line-height:1.6;">Flag every piece: does it answer a curious question or a deciding question? Count both. The ratio will shock you.</div>
+      </div>
+      <div style="background:var(--gray-faint);border:1px solid var(--border);border-radius:10px;padding:24px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Step 02</div>
+        <div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:6px;">Pull your late-stage objections</div>
+        <div style="font-size:13px;color:var(--gray);line-height:1.6;">Your three most common late-stage sales objections are your highest-consequence questions. Does content answering each of them exist?</div>
+      </div>
+      <div style="background:var(--gray-faint);border:1px solid var(--border);border-radius:10px;padding:24px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Step 03</div>
+        <div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:6px;">Map the gaps</div>
+        <div style="font-size:13px;color:var(--gray);line-height:1.6;">For each high-consequence question — does content addressing this uncertainty exist? Missing = content gap. Present = needs rewrite.</div>
+      </div>
+      <div style="background:var(--orange-light);border:1px solid rgba(232,93,4,0.2);border-radius:10px;padding:24px;">
+        <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:10px;">Step 04</div>
+        <div style="font-weight:700;font-size:14px;color:var(--dark);margin-bottom:6px;">Write for the pause</div>
+        <div style="font-size:13px;color:var(--dark);line-height:1.6;">Rewrite content to reduce the uncertainty behind each objection — not around it. The pause is where deals are lost and won.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- F2: THE INTAKE FORM -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="f2">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">
+        <span class="section-num">Framework 02</span>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">The Intake Form</h2>
+      <p class="section-tagline">A surgeon who only finds out what's wrong when the patient is already on the table.</p>
+    </div>
+
+    <div class="anecdote reveal">
+      <div class="anecdote-eyebrow">The Diagnosis</div>
+      <p class="anecdote-oneliner">"No history. No prior symptoms. No pattern across previous cases. Just vibes and whatever the patient remembers to mention while panicking."</p>
+      <p class="anecdote-body">That's most content teams — collecting questions only when someone is already mid-crisis. A stalled deal. A churned customer. A confused prospect on a call. By then it's reactive medicine. The Intake Form is the system that runs before the emergency. It catches symptoms early, consistently, from every source — so by the time someone lands on your content, the diagnosis is already done.</p>
+    </div>
+
+    <p class="body-text reveal">A real question mining system has defined inputs, a shared backlog, clear ownership, a regular cadence, and feedback loops from performance. Most teams treat questions as inspiration — they collect them when someone feels motivated. The Intake Form treats them as infrastructure.</p>
+
+    <div class="diagram reveal">
+      <div class="diagram-label">The Intake Form — Where real symptoms come from, and where they go</div>
+      <div class="intake-sources">
+        <div class="source-card">
+          <div class="source-icon">🎙️</div>
+          <div class="source-name">Sales Call Transcripts</div>
+          <div class="source-desc">Objections and hesitations in live conversation — the rawest form of buyer uncertainty.</div>
+          <span class="signal-badge sig-vh">Very High Signal</span>
+        </div>
+        <div class="source-card">
+          <div class="source-icon">🎫</div>
+          <div class="source-name">Support Tickets</div>
+          <div class="source-desc">Expectation gaps after purchase. Positioning problems disguised as support issues.</div>
+          <span class="signal-badge sig-vh">Very High Signal</span>
+        </div>
+        <div class="source-card">
+          <div class="source-icon">💬</div>
+          <div class="source-name">Community / Reddit</div>
+          <div class="source-desc">Unfiltered frustration, rants, "I'm done with this" threads. The most honest language buyers use.</div>
+          <span class="signal-badge sig-h">High Signal</span>
+        </div>
+        <div class="source-card">
+          <div class="source-icon">🔍</div>
+          <div class="source-name">In-Product Search</div>
+          <div class="source-desc">What users look for that your nav doesn't surface. Signals what they expected and didn't find.</div>
+          <span class="signal-badge sig-h">High Signal</span>
+        </div>
+        <div class="source-card">
+          <div class="source-icon">📋</div>
+          <div class="source-name">Demo / Contact Forms</div>
+          <div class="source-desc">The exact framing buyers use before sales gets involved. Unpolished, unfiltered intent.</div>
+          <span class="signal-badge sig-h">High Signal</span>
+        </div>
+        <div class="source-card">
+          <div class="source-icon">⭐</div>
+          <div class="source-name">G2 / Review Sites</div>
+          <div class="source-desc">Patterns in praise and complaint that repeat across hundreds of customers.</div>
+          <span class="signal-badge sig-m">Medium Signal</span>
+        </div>
+      </div>
+
+      <!-- Funnel SVG -->
+      <div class="funnel-wrap">
+        <svg class="funnel-svg" viewBox="0 0 500 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="83" y1="10" x2="250" y2="68" stroke="#E85D04" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.4"/>
+          <line x1="166" y1="10" x2="250" y2="68" stroke="#E85D04" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.4"/>
+          <line x1="250" y1="10" x2="250" y2="68" stroke="#E85D04" stroke-width="2" opacity="0.6"/>
+          <line x1="334" y1="10" x2="250" y2="68" stroke="#E85D04" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.4"/>
+          <line x1="417" y1="10" x2="250" y2="68" stroke="#E85D04" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.4"/>
+          <circle cx="250" cy="70" r="6" fill="#E85D04"/>
+          <text x="250" y="20" font-family="DM Mono" font-size="9" fill="#888" text-anchor="middle" letter-spacing="1">ALL SIGNALS FLOW INTO ONE PLACE</text>
+        </svg>
+      </div>
+
+      <div class="backlog-box">
+        <div class="backlog-icon">📂</div>
+        <div>
+          <div class="backlog-title">The Shared Question Backlog</div>
+          <div class="backlog-desc">One place. One owner. Questions normalized, clustered, and prioritized — not scattered across docs that die when someone leaves.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <div class="callout-label">Kill the Fluff Rule #2</div>
+      <div class="callout-text">If your question collection process requires a meeting to start, it will never become a system. Build it so it runs without motivation.</div>
+    </div>
+
+    <div class="compare-grid reveal">
+      <div class="compare-col bad">
+        <div class="compare-head bad">✗ Ad Hoc — What Most Teams Do</div>
+        <div class="compare-body">
+          <div class="compare-row">Someone pulls Reddit threads once a quarter</div>
+          <div class="compare-row">Sales calls get skimmed, not synthesized</div>
+          <div class="compare-row">Notes live in someone's private doc</div>
+          <div class="compare-row">The doc dies when the person leaves</div>
+          <div class="compare-row">Content gets created on gut feel</div>
+        </div>
+      </div>
+      <div class="compare-col good">
+        <div class="compare-head good">✓ The Intake Form — What Works</div>
+        <div class="compare-body">
+          <div class="compare-row">Questions flow into a shared backlog weekly</div>
+          <div class="compare-row">Every source has an owner and a format</div>
+          <div class="compare-row">One shared backlog with clear ownership</div>
+          <div class="compare-row">Performance loops flag what needs updating</div>
+          <div class="compare-row">Content is created against real decision friction</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- F3: THE SYMPTOM TRAP -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="f3">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">
+        <span class="section-num">Framework 03</span>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">The Symptom Trap</h2>
+      <p class="section-tagline">Every patient said "it hurts." The surgeon treated them all for the same thing.</p>
+    </div>
+
+    <div class="anecdote reveal">
+      <div class="anecdote-eyebrow">The Diagnosis</div>
+      <p class="anecdote-oneliner">"'It hurts' is not a diagnosis. It's a complaint."</p>
+      <p class="anecdote-body">Same with "pricing" — ten buyers mention it and a content team builds one pricing page that answers none of them properly, because they all meant something different. One was scared of hidden costs. One needed to justify the budget upward. One just wanted to know if they were being taken for a ride. Same word. Five different conditions. The Symptom Trap happens when you treat the complaint instead of reading the chart. Cluster by what they said and you'll always be treating the wrong thing.</p>
+    </div>
+
+    <p class="body-text reveal">Most content teams organize by topic: Pricing, Security, Integrations, Features. It feels organized. It is also exactly wrong. Topic describes what something is about. Intent describes why someone is asking. Organize by topic and you create pages that talk around decisions. Organize by intent and you create answers that resolve them.</p>
+
+    <div class="diagram reveal">
+      <div class="diagram-label">The Five Intent Types — What they actually mean underneath the complaint</div>
+      <div class="intent-header-row">
+        <div class="intent-header-cell">Intent Type</div>
+        <div class="intent-header-cell">What It Sounds Like</div>
+        <div class="intent-header-cell">What Resolves It</div>
+      </div>
+      <div class="intent-stack">
+        <div class="intent-row">
+          <div class="intent-label">Fear</div>
+          <div class="intent-sounds">"Is this going to break what we have?" / "Will my team actually use this?"</div>
+          <div class="intent-resolves">Honest tradeoff explanations. "Who this is not for" content. No spin.</div>
+        </div>
+        <div class="intent-row">
+          <div class="intent-label">Evaluation</div>
+          <div class="intent-sounds">"How does this compare to X?" / "Why would we pick this over Y?"</div>
+          <div class="intent-resolves">Direct, honest comparison content. Clear positioning without being defensive.</div>
+        </div>
+        <div class="intent-row">
+          <div class="intent-label highlight">Fit Anxiety</div>
+          <div class="intent-sounds">"Are we too small for this?" / "Is this only for enterprise?" / "Is this overkill?"</div>
+          <div class="intent-resolves">One canonical explanation of who this is built for — and who it isn't. One answer. Not three.</div>
+        </div>
+        <div class="intent-row">
+          <div class="intent-label">Justification</div>
+          <div class="intent-sounds">"How do I explain ROI to my boss?" / "What's the business case?"</div>
+          <div class="intent-resolves">ROI framing. Case studies. Language for the person selling internally, not the buyer.</div>
+        </div>
+        <div class="intent-row">
+          <div class="intent-label">Process</div>
+          <div class="intent-sounds">"What does setup actually look like?" / "Who owns this after we buy?"</div>
+          <div class="intent-resolves">Step-by-step reality content. The honest version of implementation, not the marketing one.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse-demo reveal">
+      <div class="collapse-eyebrow">Live example — Fit Anxiety in the wild</div>
+      <div class="collapse-questions">
+        <div class="collapse-q">"Is this overkill for us?"</div>
+        <div class="collapse-q">"Are we too small for this?"</div>
+        <div class="collapse-q">"Is this only for enterprise teams?"</div>
+      </div>
+      <div class="collapse-arrows">
+        <span class="collapse-arrow">↘</span>
+        <span class="collapse-arrow">↓</span>
+        <span class="collapse-arrow">↙</span>
+      </div>
+      <div class="collapse-result">
+        <div class="collapse-result-title">One Intent: Fit Anxiety</div>
+        <div class="collapse-result-desc">One canonical answer absorbs all three — instead of three partial pages that each miss the real question underneath.</div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <div class="callout-label">Kill the Fluff Rule #3</div>
+      <div class="callout-text">One complete answer beats three partial ones. Stop organizing your content by what it's about. Organize it by the decision it resolves.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- F4: THE MISPLACED ORGAN -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="f4">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">
+        <span class="section-num">Framework 04</span>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">The Misplaced Organ</h2>
+      <p class="section-tagline">Right answer. Wrong room. Nobody finds it. Patient doesn't make it.</p>
+    </div>
+
+    <div class="anecdote reveal">
+      <div class="anecdote-eyebrow">The Diagnosis</div>
+      <p class="anecdote-oneliner">"Not every patient needs surgery. Some just need to be told to drink more water."</p>
+      <p class="anecdote-body">Sending a patient into the operating theatre for a headache is expensive, terrifying, and completely unnecessary. Sending someone with a brain tumour home with a paracetamol is a different kind of disaster. Both are mistakes of placement, not diagnosis. Some answers need the full operating theatre — dedicated pages, maximum visibility, canonical explanations that AI will cite for years. Some need a waiting room leaflet. Some just need a sticky note on the way out. The crime isn't writing a bad answer. It's putting it in the wrong room.</p>
+    </div>
+
+    <p class="body-text reveal">One of the most expensive content mistakes is treating every question as equally important. Teams either overproduce — full pages for answers that should be two sentences — or under-explain, burying critical decision-shaping content where no one finds it. The Misplaced Organ is a discipline for deciding where an answer lives.</p>
+
+    <div class="diagram reveal">
+      <div class="diagram-label">The Three Rooms — Where answers belong and why</div>
+      <div class="rooms-grid">
+        <div class="room-row">
+          <div class="room-label r1">Operating<br>Theatre</div>
+          <div class="room-content">
+            <div class="room-when">
+              <span class="room-sublabel">Use when</span>
+              Shapes how the whole category is understood. Appears across multiple sources. AI cites it frequently. Influences evaluation and comparison.
+            </div>
+            <div class="room-examples">
+              <span class="room-sublabel">Examples</span>
+              "Who this product is for (and not for)" · Pricing philosophy and tradeoffs · Core architectural decisions
+            </div>
+          </div>
+        </div>
+        <div class="room-row">
+          <div class="room-label r2">Waiting<br>Room</div>
+          <div class="room-content">
+            <div class="room-when">
+              <span class="room-sublabel">Use when</span>
+              Important but secondary. Supports a larger explanation. Resolves a specific fear or objection but doesn't stand alone.
+            </div>
+            <div class="room-examples">
+              <span class="room-sublabel">Examples</span>
+              "Is this overkill for us?" · "What happens if we don't fully adopt it?" · "Who owns this internally?"
+            </div>
+          </div>
+        </div>
+        <div class="room-row">
+          <div class="room-label r3">Sticky<br>Note</div>
+          <div class="room-content">
+            <div class="room-when">
+              <span class="room-sublabel">Use when</span>
+              Narrow question. Removes momentary friction only. Doesn't change the overall decision. Tooltip-level clarification.
+            </div>
+            <div class="room-examples">
+              <span class="room-sublabel">Examples</span>
+              Minor feature clarifications · Setup edge cases · Single-step how-to questions
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cascade reveal">
+      <div class="cascade-eyebrow">The Cascade Effect — Why placement compounds over time</div>
+      <div class="cascade-flow">
+        <div class="cascade-step s1">Pre-purchase<br>content</div>
+        <div class="cascade-arrow">→</div>
+        <div class="cascade-step s2">In-product<br>understanding</div>
+        <div class="cascade-arrow">→</div>
+        <div class="cascade-step s3">Reduced post-purchase<br>support</div>
+        <div class="cascade-arrow">→</div>
+        <div class="cascade-step s4">AI citations<br>compound over time</div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <div class="callout-label">Kill the Fluff Rule #4</div>
+      <div class="callout-text">The question isn't "should we answer this?" The question is "where does this answer belong?" Misplacing answers is just as damaging as not having them.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- F5: DEATH BY MISSED ROUNDS -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="section" id="f5">
+  <div class="container">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">
+        <span class="section-num">Framework 05</span>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">Death by Missed Rounds</h2>
+      <p class="section-tagline">The surgeon who only checks on patients when she feels like it.</p>
+    </div>
+
+    <div class="anecdote reveal">
+      <div class="anecdote-eyebrow">The Diagnosis</div>
+      <p class="anecdote-oneliner">"Nobody wants that surgeon."</p>
+      <p class="anecdote-body">In a hospital, rounds happen every morning. Not because the doctor is inspired. Not because a meeting was called. Because the schedule says so — and the patient's life depends on consistency, not motivation. Most content systems run on inspiration: someone gets excited, a sprint happens, things go quiet. Death by Missed Rounds is what happens to those systems. The patient was fine on Monday. Nobody checked Tuesday. By Friday it was too late.</p>
+    </div>
+
+    <p class="body-text reveal">The reason most question intelligence systems fail isn't bad intent — it's that the process isn't boring enough to survive real workloads. If executing the system requires inspiration, it will fail. The fix is rhythm. Three rhythms, specifically — each with a clear activity, a clear output, and a scheduled trigger that doesn't wait for someone to feel motivated.</p>
+
+    <div class="diagram reveal">
+      <div class="diagram-label">The Three Rhythms — What happens, when, and what it produces</div>
+      <div class="rhythm-grid">
+        <div class="rhythm-card">
+          <div class="rhythm-head">
+            <div class="rhythm-freq">Every week</div>
+            <div class="rhythm-title">Weekly</div>
+          </div>
+          <div class="rhythm-body">
+            <ul class="rhythm-acts">
+              <li>New questions flow into the shared backlog</li>
+              <li>Obvious duplicates get merged</li>
+              <li>One or two new clusters get flagged</li>
+            </ul>
+            <div class="rhythm-output">
+              <span class="rhythm-output-label">Output</span>
+              A live backlog that reflects current friction — not last quarter's assumptions.
+            </div>
+          </div>
+        </div>
+        <div class="rhythm-card">
+          <div class="rhythm-head">
+            <div class="rhythm-freq">Every month</div>
+            <div class="rhythm-title">Monthly</div>
+          </div>
+          <div class="rhythm-body">
+            <ul class="rhythm-acts">
+              <li>Review clusters through a decision-influence lens</li>
+              <li>Decide what deserves a canonical answer</li>
+              <li>Assign ownership and format</li>
+            </ul>
+            <div class="rhythm-output">
+              <span class="rhythm-output-label">Output</span>
+              A prioritized answer queue with owners — so content gets made against real gaps.
+            </div>
+          </div>
+        </div>
+        <div class="rhythm-card">
+          <div class="rhythm-head">
+            <div class="rhythm-freq">Every quarter</div>
+            <div class="rhythm-title">Quarterly</div>
+          </div>
+          <div class="rhythm-body">
+            <ul class="rhythm-acts">
+              <li>Review which answers are being cited by AI</li>
+              <li>Update language as question phrasing evolves</li>
+              <li>Retire answers that no longer serve buyers</li>
+            </ul>
+            <div class="rhythm-output">
+              <span class="rhythm-output-label">Output</span>
+              A content library that ages gracefully instead of becoming noise.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rules-box reveal">
+      <div class="rules-eyebrow">Three rules that keep the patient alive</div>
+      <div class="rule-item">
+        <div class="rule-num">1</div>
+        <div class="rule-text"><strong>The system must have a home.</strong> One shared backlog, one owner per source, one format for logging questions. If it lives in three places, it lives in no place.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">2</div>
+        <div class="rule-text"><strong>The trigger must be automatic.</strong> Questions should flow into the backlog without anyone deciding to add them. Automate the intake. Reserve human judgment for prioritization.</div>
+      </div>
+      <div class="rule-item">
+        <div class="rule-num">3</div>
+        <div class="rule-text"><strong>The review must be scheduled, not summoned.</strong> A monthly calendar event outlasts any amount of team motivation. Book it before you need it.</div>
+      </div>
+    </div>
+
+    <div class="callout reveal">
+      <div class="callout-label">Kill the Fluff Rule #5</div>
+      <div class="callout-text">The system that runs when you're too busy to think about it is the only system that works. Build for low motivation, not high motivation.</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SUMMARY -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="summary-section" id="summary">
+  <div class="container">
+    <div class="reveal" style="margin-bottom:56px;">
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:16px;">Quick Reference</div>
+      <h2 class="summary-title">Kill the <span>Fluff</span></h2>
+      <p class="summary-sub">Five diagnoses. One operating principle: build for the decision, not the impression.</p>
+    </div>
+
+    <div class="summary-header">
+      <div class="summary-header-cell" style="padding-left:20px;">Framework</div>
+      <div class="summary-header-cell">The Shift</div>
+      <div class="summary-header-cell">The Output</div>
+    </div>
+
+    <div class="summary-cards reveal">
+      <div class="summary-card">
+        <div class="summary-card-num">
+          <div class="s-num">01</div>
+          <div class="s-name">The Vanity Scan</div>
+        </div>
+        <div class="summary-card-shift">From ranking for curiosity → to answering for decisions</div>
+        <div class="summary-card-output">Content that shortens deal cycles instead of generating impressions</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-num">
+          <div class="s-num">02</div>
+          <div class="s-name">The Intake Form</div>
+        </div>
+        <div class="summary-card-shift">From ad hoc listening → to a system that never stops collecting</div>
+        <div class="summary-card-output">A live backlog of real buyer friction, sourced from every channel</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-num">
+          <div class="s-num">03</div>
+          <div class="s-name">The Symptom Trap</div>
+        </div>
+        <div class="summary-card-shift">From topic clustering → to intent clustering</div>
+        <div class="summary-card-output">One canonical answer per intent, instead of many partial ones</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-num">
+          <div class="s-num">04</div>
+          <div class="s-name">The Misplaced Organ</div>
+        </div>
+        <div class="summary-card-shift">From "should we answer this?" → to "where does this answer belong?"</div>
+        <div class="summary-card-output">A content library with no bloat and no buried explanations</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-card-num">
+          <div class="s-num">05</div>
+          <div class="s-name">Death by Missed Rounds</div>
+        </div>
+        <div class="summary-card-shift">From brainstorm-driven content → to rhythm-driven content</div>
+        <div class="summary-card-output">A system that compounds over time instead of decaying</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Kill the Fluff</div>
+  <div class="footer-right">
+    <div class="footer-name">Karty Cain</div>
+    <div class="footer-role">Content & Communication Strategist</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -30px 0px' });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
